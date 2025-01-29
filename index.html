@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phong Bao Lì Xì</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #d62828;
+        }
+        .envelopes {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .envelope {
+            width: 80px;
+            height: 120px;
+            background-color: #ffcc00;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .envelope.used {
+            background-color: #ccc;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chọn Lì Xì</h1>
+    <div class="envelopes" id="envelopes">
+        <!-- Phong bao sẽ được tạo bằng JavaScript -->
+    </div>
+
+    <script>
+        // Danh sách mệnh giá lì xì (9 tờ 10k và 1 tờ 100k)
+        let amounts = [10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000, 100000];
+        amounts = amounts.sort(() => Math.random() - 0.5); // Trộn ngẫu nhiên
+
+        const envelopesContainer = document.getElementById('envelopes');
+
+        // Tạo giao diện phong bao lì xì
+        function renderEnvelopes() {
+            envelopesContainer.innerHTML = '';
+            amounts.forEach((amount, index) => {
+                const envelope = document.createElement('div');
+                envelope.classList.add('envelope');
+                envelope.textContent = 'Lì Xì';
+                envelope.addEventListener('click', () => pickEnvelope(index));
+                envelopesContainer.appendChild(envelope);
+            });
+        }
+
+        // Hàm xử lý khi chọn phong bao
+        function pickEnvelope(index) {
+            const pickedAmount = amounts[index];
+            alert(`Bạn đã bốc được: ${pickedAmount.toLocaleString()} VNĐ!`);
+            amounts.splice(index, 1); // Xóa phong bao đã chọn
+            renderEnvelopes(); // Cập nhật giao diện
+            if (amounts.length === 0) {
+                alert('Tất cả lì xì đã được bốc!');
+            }
+        }
+
+        // Khởi tạo giao diện ban đầu
+        renderEnvelopes();
+    </script>
+</body>
+</html>
